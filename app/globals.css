@@ -2,20 +2,339 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --radius: 0.5rem;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    border-radius: 0px;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 0px;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: transparent;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .form-btn {
+    @apply inline-flex justify-center items-center bg-primary hover:bg-primary px-6 py-2 rounded-md w-full min-h-14 font-bold text-base text-dark-100 !important;
+  }
+
+  .form-input {
+    @apply bg-dark-300 focus-visible:shadow-none border-none focus-visible:ring-0 w-full min-h-14 font-bold placeholder:font-normal text-base text-white placeholder:text-light-100 !important;
+  }
+
+  /* Book Card */
+  .book-title {
+    @apply mt-2 line-clamp-1 font-semibold text-base text-white xs:text-xl;
+  }
+
+  .book-genre {
+    @apply mt-1 line-clamp-1 text-light-100 text-sm xs:text-base italic;
+  }
+
+  .book-loaned {
+    @apply flex flex-row max-xs:justify-center items-center gap-1;
+  }
+
+  .book-btn {
+    @apply bg-dark-600 mt-3 w-full min-h-14 font-bebas-neue text-base text-primary;
+  }
+
+  /* Borrowed Book */
+  .borrowed-book {
+    @apply relative p-5 rounded-2xl w-full xs:w-min gradient-vertical;
+  }
+
+  .borrowed-book_cover {
+    @apply flex justify-center items-center px-10 lg:px-16 py-4 rounded-lg w-full;
+  }
+
+  /* Book Cover */
+  .book-cover_extra_small {
+    @apply w-[28.95px] h-10;
+  }
+
+  .book-cover_small {
+    @apply w-[55px] h-[76px];
+  }
+
+  .book-cover_medium {
+    @apply w-[144px] h-[199px];
+  }
+
+  .book-cover_regular {
+    @apply w-[114px] xs:w-[174px] h-[169px] xs:h-[239px];
+  }
+
+  .book-cover_wide {
+    @apply w-[256px] xs:w-[296px] h-[354px] xs:h-[404px];
+  }
+
+  /* Book List */
+  .book-list {
+    @apply flex flex-wrap max-xs:justify-between gap-5 xs:gap-10 mt-10;
+  }
+
+  /* Book Overview */
+  .book-overview {
+    @apply flex xl:flex-row flex-col-reverse items-center gap-12 sm:gap-32 xl:gap-8;
+  }
+
+  .book-overview h1 {
+    @apply font-semibold text-5xl text-white md:text-7xl;
+  }
+
+  .book-info {
+    @apply flex flex-row flex-wrap gap-4 mt-7 text-light-100 text-xl;
+  }
+
+  .book-copies {
+    @apply flex flex-row flex-wrap gap-4 mt-1;
+  }
+
+  .book-copies p {
+    @apply text-light-100 text-xl;
+  }
+
+  .book-copies p span {
+    @apply ml-2 font-semibold text-primary;
+  }
+
+  .book-description {
+    @apply mt-2 text-justify text-light-100 text-xl;
+  }
+
+  .book-overview_btn {
+    @apply mt-4 min-h-14 w-fit bg-primary text-dark-100 hover:bg-primary/90 max-md:w-full !important;
+  }
+
+  /* File Upload */
+  .upload-btn {
+    @apply flex justify-center items-center gap-1.5 rounded-md w-full min-h-14;
+  }
+
+  .upload-filename {
+    @apply mt-1 text-center text-xs;
+  }
+
+  .progress {
+    @apply bg-green-800 p-0.5 rounded-full font-bebas-neue font-bold text-[8px] text-center text-light-100 leading-none;
+  }
+
+  /* Search */
+  .search {
+    @apply relative flex items-center bg-dark-300 mt-10 px-4 rounded-xl w-full min-h-14;
+  }
+
+  .search-input {
+    @apply focus-visible:shadow-none border-none focus-visible:ring-0 w-full font-bold placeholder:font-normal text-white placeholder:text-light-100 !important;
+  }
+
+  /* Book Receipt */
+  .book-receipt_admin-btn {
+    @apply bg-light-300 rounded-md text-primary-admin font-semibold hover:bg-light-300/80 !important;
+  }
+
+  /* Book Ticket */
+  #book-ticket {
+    @apply relative hidden bg-dark-300 mt-10 py-8 w-[544px] overflow-hidden;
+  }
+
+  #book-ticket #book-details div {
+    @apply space-y-1 rounded-md border border-light-100/10 p-3;
+  }
+
+  #book-ticket #book-details div p:first-child {
+    @apply text-light-700 text-xs;
+  }
+
+  #book-ticket #book-details div p:last-child {
+    @apply font-bold text-sm text-white;
+  }
+
+  #book-ticket #book-divider div:first-child {
+    @apply absolute -left-3.5 top-1/2 size-7 -translate-y-1/2 rounded-full bg-black;
+  }
+
+  #book-ticket #book-divider div:last-child {
+    @apply absolute -right-3.5 top-1/2 size-7 -translate-y-1/2 rounded-full bg-black;
+  }
+
+  .book-ticket-circles {
+    @apply -bottom-6 absolute inset-x-0 flex flex-row gap-1.5;
+  }
+
+  /* Not Found */
+  #not-found {
+    @apply flex flex-col justify-center items-center w-full text-center;
+  }
+
+  #not-found h4 {
+    @apply mt-6 font-semibold text-2xl text-white;
+  }
+
+  #not-found p {
+    @apply mt-1 w-[360px] text-light-100;
+  }
+
+  .not-found-btn {
+    @apply bg-primary font-bebas-neue min-w-[360px] mt-6 text-dark-100 text-xl hover:bg-primary/90 min-h-12 !important;
+  }
+
+  /* Pagination */
+  #pagination {
+    @apply flex flex-row justify-end gap-3;
+  }
+
+  .pagination-btn_light {
+    @apply bg-light-300 text-dark-300 hover:bg-light-300/70 !important;
+  }
+
+  .pagination-btn_dark {
+    @apply bg-dark-300 hover:bg-dark-100 !important;
+  }
+
+  #pagination p {
+    @apply inline-flex items-center px-4 py-1.5 rounded-md font-semibold text-center text-sm;
+  }
+
+  /* Sort */
+  .select-trigger {
+    @apply border-dark-100 bg-dark-300 px-4 w-40 h-10 text-light-100 !important;
+  }
+
+  .select-content {
+    @apply border-dark-100 bg-dark-300 text-light-100 !important;
+  }
+
+  .select-item {
+    @apply focus:bg-dark-600 focus:text-light-100 !important;
+  }
+}
+
+@layer utilities {
+  .gradient-vertical {
+    background: linear-gradient(180deg, #12141d 0%, #12151f 100%);
+  }
+
+  .gradient-gray {
+    background: linear-gradient(270deg, #37363a 0%, #353637 100%);
+  }
+
+  .gradient-blue {
+    background: linear-gradient(180deg, #232839 0%, #12141d 100%);
+  }
+
+  /* Auth */
+  .auth-container {
+    @apply relative flex sm:flex-row flex-col-reverse text-light-100;
+  }
+
+  .auth-form {
+    @apply flex flex-1 items-center bg-dark-100 bg-pattern bg-cover bg-top my-auto px-5 py-10 h-full min-h-screen;
+  }
+
+  .auth-box {
+    @apply flex flex-col gap-6 mx-auto p-10 rounded-lg max-w-xl gradient-vertical;
+  }
+
+  .auth-illustration {
+    @apply sm:top-0 sticky sm:flex-1 w-full h-40 sm:h-screen;
+  }
+
+  /* Root */
+  .root-container {
+    @apply flex flex-col flex-1 bg-dark-100 bg-pattern bg-cover bg-top px-5 md:px-16 xs:px-10 min-h-screen;
+  }
+
+  /* Book Details */
+  .book-details {
+    @apply flex lg:flex-row flex-col gap-16 mt-16 lg:mt-36 mb-20;
+  }
+
+  .book-details h3 {
+    @apply font-semibold text-primary text-xl;
+  }
+
+  /* Library */
+  .library {
+    @apply flex flex-col mx-auto w-full max-w-xl text-center;
+  }
+
+  .library-subtitle {
+    @apply font-semibold text-lg text-light-100 uppercase;
+  }
+
+  .library-title {
+    @apply mt-2 font-semibold text-3xl text-white xs:text-5xl;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
 }
